@@ -1,21 +1,24 @@
 package edu.columbia.kingoftheapocalypse;
 
+import java.awt.Dimension;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 public class GridItem {
-	public Image mImage = null;
-	public Runnable mRunnable = null;
-	/** Changes depending on current phase of game, and based on players' actions */
-	public boolean mClickEnabled = false;
-	public JButton mButton = null;
+	private Image mImage = null;
 	public int mX, mY;
 	
 	public JButton getButton() {
 		JButton jbutton = new JButton();
-		jbutton.setIcon(new ImageIcon(mImage));
+		jbutton.setPreferredSize(new Dimension(30, 30));
+		if (mImage != null)
+			jbutton.setIcon(new ImageIcon(mImage));
 		return jbutton;
+	}
+	
+	public void setImage(Image image) {
+		mImage = image;
 	}
 }
