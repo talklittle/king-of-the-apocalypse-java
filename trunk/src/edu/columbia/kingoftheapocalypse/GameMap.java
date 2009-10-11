@@ -37,6 +37,9 @@ public class GameMap {
 					try {
 						char inChar = line.charAt(col);
 						switch (inChar) {
+						// Blank square
+						case ' ':
+							continue;
 						// Unit
 						case '1':
 						case '2':
