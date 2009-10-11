@@ -16,6 +16,7 @@ import java.awt.Label;
 import java.awt.image.BufferedImage;
 import java.io.File;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -28,8 +29,6 @@ public class MainFrame extends JFrame {
     JComboBox horGapComboBox;
     JComboBox verGapComboBox;
 //    JButton applyButton = new JButton("Apply gaps");
-    // TODO: variable size grid, based on map read from input.
-    GridLayout experimentLayout = new GridLayout(20, 20);
     GameMap gameMap;
     
     public MainFrame(String name, File mapFile) {
@@ -41,7 +40,7 @@ public class MainFrame extends JFrame {
     
     public void addComponentsToPane(final Container pane) {
         final JPanel compsToExperiment = new JPanel();
-        compsToExperiment.setLayout(experimentLayout);
+        compsToExperiment.setLayout(gameMap.getLayout());
         JPanel controls = new JPanel();
         controls.setLayout(new GridLayout(2, 3));
         
@@ -93,6 +92,12 @@ public class MainFrame extends JFrame {
      * event dispatch thread.
      */
     private static void createAndShowGUI(String mapFileName) {
+    	// FIXME: initializing images belongs in a different method
+    	// initialize Unit.defaultImages
+    	Unit.defaultImages = new Image[2];
+    	Unit.defaultImages[0] = new ImageIcon(MainFrame.class.getResource("/res/images/blue_unit.png")).getImage();
+    	Unit.defaultImages[1] = new ImageIcon(MainFrame.class.getResource("/res/images/red_unit.png")).getImage();
+    	
         //Create and set up the window.
         MainFrame frame = new MainFrame("King of the Apocalypse", new File(mapFileName));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -127,7 +132,7 @@ public class MainFrame extends JFrame {
     }
     
     private void beginLoop() {
-    	
+    	gameMap.setListeners(Constants.GAME_STATE_PLAY);
     }
 
     public static void main(String[] args) {
